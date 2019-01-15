@@ -67,7 +67,7 @@
                   <tr>
                     <th>No</th>
                     <th>NIK</th>
-                    <th>Nama Keluarga</th>
+                    <th>Nama Keluarga  </th>
                     <th>Hubungan Dalam Keluarga</th>
                     <th>Action</th>
                   </tr>
