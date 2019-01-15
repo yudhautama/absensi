@@ -66,7 +66,7 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>NIK</th>
+                    <th>NIKwdasdadas</th>
                     <th>Nama Karyawan</th>
                     <th>Tanggal Lahir</th>
                     <th>Jenis Kelamin</th>
