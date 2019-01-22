@@ -17,6 +17,22 @@ class Tbl_karyawan extends CI_Controller
         $data['tbl_karyawan'] = $this->Tbl_karyawan_model->get_all();
         $q = urldecode($this->input->get('q', TRUE));
         $start = intval($this->input->get('start'));
+
+        if(isset($_GET['jenis_kelamin'])){
+            $jenis_kelamin = $_GET['jenis_kelamin'];
+        }else{
+            $jenis_kelamin = '';
+        }
+        if(isset($_GET['fromdate'])){
+            $fromdate = $_GET['fromdate'];
+        }else{
+            $fromdate = '';
+        }
+        if(isset($_GET['todate'])){
+            $todate = $_GET['todate'];
+        }else{
+            $todate = '';
+        }
         
         if ($q <> '') {
             $config['base_url'] = base_url() . 'tbl_karyawan/index.html?q=' . urlencode($q);
@@ -35,11 +51,12 @@ class Tbl_karyawan extends CI_Controller
         $this->pagination->initialize($config);
 
         $data = array(
-            'tbl_karyawan_data' => $tbl_karyawan,
+            'tbl_karyawan_data' => $this->Tbl_karyawan_model->filter($jenis_kelamin, $fromdate, $todate),
             'q' => $q,
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
+            'j_kel' => $this->Tbl_karyawan_model->GetKel()->result_array(),
         );
         $data['page']='data_master';
         
@@ -256,21 +273,30 @@ class Tbl_karyawan extends CI_Controller
         }
     }
 
+    public function deleteAll(){
+
+        foreach($_POST['nik'] as $nik){
+            $this->Tbl_karyawan_model->delete($nik);
+        }
+        return redirect('tbl_karyawan');
+
+    }
+
     public function _rules() 
     {
-       $this->form_validation->set_rules('nama_kyn', 'nama kyn', 'trim|required');
-       $this->form_validation->set_rules('t4_lahir', 't4 lahir', 'trim|required');
-       $this->form_validation->set_rules('tgl_lahir', 'tgl lahir', 'trim|required');
-       $this->form_validation->set_rules('j_kel', 'j kel', 'trim|required');
-       $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
-       $this->form_validation->set_rules('no_tlp', 'no tlp', 'trim|required');
-       $this->form_validation->set_rules('email', 'email', 'trim|required');
-       $this->form_validation->set_rules('jabatan', 'jabatan', 'trim|required');
-       $this->form_validation->set_rules('join_date', 'join date', 'trim|required');
-    //    $this->form_validation->set_rules('end_date', 'end date', 'trim|required');
-       $this->form_validation->set_rules('status', 'status', 'trim|required');
-       $this->form_validation->set_rules('stat_kwn', 'stat_kwn', 'trim|required');
-    //    $this->form_validation->set_rules('foto', 'foto', 'trim|required');
+    //    $this->form_validation->set_rules('nama_kyn', 'nama kyn', 'trim|required');
+    //    $this->form_validation->set_rules('t4_lahir', 't4 lahir', 'trim|required');
+    //    $this->form_validation->set_rules('tgl_lahir', 'tgl lahir', 'trim|required');
+    //    $this->form_validation->set_rules('j_kel', 'j kel', 'trim|required');
+    //    $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
+    //    $this->form_validation->set_rules('no_tlp', 'no tlp', 'trim|required');
+    //    $this->form_validation->set_rules('email', 'email', 'trim|required');
+    //    $this->form_validation->set_rules('jabatan', 'jabatan', 'trim|required');
+    //    $this->form_validation->set_rules('join_date', 'join date', 'trim|required');
+    // //    $this->form_validation->set_rules('end_date', 'end date', 'trim|required');
+    //    $this->form_validation->set_rules('status', 'status', 'trim|required');
+    //    $this->form_validation->set_rules('stat_kwn', 'stat_kwn', 'trim|required');
+    // //    $this->form_validation->set_rules('foto', 'foto', 'trim|required');
 
        $this->form_validation->set_rules('nik', 'nik', 'trim');
        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
@@ -294,11 +320,11 @@ class Tbl_karyawan extends CI_Controller
          redirect('tbl_karyawan');
      }
      return $this->upload->data('file_name');
- }
+    }
 
- public function tanggal($date){
-    return date("d-m-Y", strtotime($date));
- }
+    public function tanggal($date){
+        return date("d-m-Y", strtotime($date));
+    }
  
 
 }

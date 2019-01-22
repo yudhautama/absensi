@@ -72,11 +72,9 @@
                       <input type="date" class="form-control form-control-sm" name="tgl_lahir" id="tgl_lahir" placeholder="Tgl Lahir" value="<?php echo $tgl_lahir; ?>" />
                     </div>
                     <div class="form-group">
-                     <label for="varchar">Jenis Kelamin <?php echo form_error('j_kel') ?></label>
-                     <select class="form-control form-control-sm" name="j_kel" id="j_kel" placeholder="Jenis Kelamin" >
-                       <option>--Pilih Jenis Kelamin--</option>
+                     <label for="varchar">Jenis Kelamin <?php echo form_error('j_kel') ?></label><br>
                        <?php foreach($jenis_kelamin as $row) { ?>
-                        <option value="<?php echo $row['jenis'] ?>" <?php if($j_kel){if($j_kel == $row['jenis']){echo 'selected'; } } ?>><?php echo $row['jenis'] ?></option>
+                        <input type="radio" name="j_kel" value="<?php echo $row['jenis'] ?>"<?php if($j_kel){if($j_kel == $row['jenis']){echo 'checked'; } } ?>><?php echo $row['jenis'] ?>
                       <?php } ?>
                     </select>
                   </div>

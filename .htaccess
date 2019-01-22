@@ -9,7 +9,7 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|images|robots\.txt)
-RewriteRule ^(.*)$ ci_adminlte/index.php?/$1 [L]
+RewriteRule ^(.*)$ absensi/index.php?/$1 [L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
@@ -17,5 +17,5 @@ RewriteRule ^(.*)$ ci_adminlte/index.php?/$1 [L]
     # can be sent to index.php, and everything works as normal.
     # Submitted by: ElliotHaughin
 
-    ErrorDocument 404 ci_adminlte/index.php
+    ErrorDocument 404 absensi/index.php
 </IfModule>

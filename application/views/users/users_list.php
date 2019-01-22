@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Data Master</title>
+  <title>Setup</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,12 +32,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Data Master</h1>
+              <h1>Setup</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Data Master</li>
+                <li class="breadcrumb-item active">Setup</li>
               </ol>
             </div>
           </div>
@@ -49,66 +49,83 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Data Keluarga</h3>
-                </div>
+              <div class="card-header">
+                <h3 class="card-title">User Management</h3>
+              </div>
               <!-- /.card-header -->
               <div class="card-body">
                <form action="" method="post" enctype="multipart/form-data">
-                <p><?php echo anchor(site_url('tbl_keluarga/create'),'Tambah', 'class="btn btn-primary"'); ?></p>
+                <p align="right"><?php echo anchor(site_url('users/create'),'Tambah User', 'class="btn btn-primary"'); ?></p>
               </div>
               <div class="col-md-4 text-center">
                 <div id="message">
                   <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
                 </div>
               </div>
+              <div class="col-2">
+                    <label for="">Level User</label>
+                    <select class="form-control form-control-sm" name="level" id="level" >
+                      <option value=''>--Pilih Level--</option>
+                      <option value="admin">Admin</option>
+                      <option value="karyawan">Karyawan</option>
+                    </select><br>
+                    <button class="btn btn-primary" type="submit" name="filter">Filter</button>
+                    <?php if(isset($_POST['filter'])){
+                      header('location: users?level_user='.$_POST['level']);
+                    } ?>
+                  </div><br>
               <table id="example1" class="table table-bordered">
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>NIK</th>
-                    <th>Nama Keluarga</th>
-                    <th>Hubungan Dalam Keluarga</th>
+                    <th>Username</th>
+                    <th>Nama Karyawan</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Level</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
-                  foreach ($tbl_keluarga_data as $tbl_keluarga)
+                  foreach ($users_data as $users)
                   {
                     ?>
                     <tr>
-                     <td width="80px"><?php echo ++$start ?></td>
-                     <td><?php echo $tbl_keluarga->nik ?></td>
-                     <td><?php echo $tbl_keluarga->nama_klg ?></td>
-                     <td><?php echo $tbl_keluarga->hubungan ?></td>
-                     <td style="text-align:center" width="200px">
-                      <?php 
-                      echo anchor(site_url('tbl_keluarga/read/'.$tbl_keluarga->id_kyn),' ', 'class="fa fa-info"'); 
-                      echo ' | '; 
-                      echo anchor(site_url('tbl_keluarga/update/'.$tbl_keluarga->id_kyn),' ', 'class="fa fa-edit"'); 
-                      echo ' | '; 
-                      echo anchor(site_url('tbl_keluarga/delete/'.$tbl_keluarga->id_kyn),' ', 'class="fa fa-trash"','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-                      ?>
-                    </td>
-                  </tr>
-                  <?php
-                }
-                ?>
-              </tbody>
-            </table>
-          </form>
+                      <td width="80px"><?php echo ++$start ?></td>
+                      <td><?php echo $users->username ?></td>
+                      <td><?php echo $users->nama_kyn ?></td>
+                      <td><?php echo $users->email ?></td>
+                      <td><?php echo $users->password ?></td>
+                      <td><?php echo $users->level ?></td>
+                      <td style="text-align:center" width="200px">
+                        <a href="<?php echo site_url('users/read/'.$users->id) ?>"><i class="fa fa-info"></i></a> |
+                        <a href="<?php echo site_url('users/update/'.$users->id) ?>"><i class="fa fa-edit"></i></a> |
+                        <a onClick="return confirm('Anda Yakin ingin Menghapusnya?')" href="<?php echo site_url('users/delete/'.$users->id) ?>"><i class="fa fa-trash"></i></a>
+                      </td>
+                    </tr>
+                    <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-md-6">
+                  <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
+                  <?php echo anchor(site_url('users/excel'), 'Excel', 'class="btn btn-primary"'); ?>
+                </div>
+              </form>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          
         </div>
-        <!-- /.card-body -->
       </div>
-      
+      <!-- /.card -->
     </div>
+    <!-- /.col -->
   </div>
-  <!-- /.card -->
-</div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
+  <!-- /.row -->
 </section>
 <!-- /.content -->
 </div>

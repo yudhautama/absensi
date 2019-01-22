@@ -28,6 +28,26 @@ class Tbl_karyawan_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+    function filter($jenis_kelamin='', $fromdate='', $todate=''){
+        $this->db->select('*');
+        $this->db->from('tbl_karyawan');
+        if($jenis_kelamin!=''){
+            $this->db->like('j_kel',$jenis_kelamin);
+        }
+        if($fromdate!=''){
+            $this->db->where('tgl_lahir >=', $fromdate);
+        }
+        if($todate!=''){
+            $this->db->where('tgl_lahir <=', $todate);
+        }
+        $query = $this->db->get();
+        if($query->num_rows() != 0){
+            return $query->result();
+        } else {
+        return false;
+        }
+    }
     
     // get total rows
     function total_rows($q = NULL) {
@@ -78,10 +98,10 @@ class Tbl_karyawan_model extends CI_Model
     }
 
     // delete data
-    function delete($id)
+    function delete($nik)
     {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        $this->db->where('nik', $nik);
+        $this->db->delete('tbl_karyawan');
     }
 
     function pendidikan($nik){
@@ -94,22 +114,22 @@ class Tbl_karyawan_model extends CI_Model
     {
       $data = $this->db->query('select * from tbl_jabatan '.$where);
       return $data;
-  }
-  function GetKel($where= "")
-  {
-      $data = $this->db->query('select * from j_kelamin '.$where);
-      return $data;
-  }
-  function GetStat($where= "")
-  {
-      $data = $this->db->query('select * from s_pegawai '.$where);
-      return $data;
-  }
-  function GetKwn($where= "")
-  {
-      $data = $this->db->query('select * from s_kawin '.$where);
-      return $data;
-  }
+    }
+    function GetKel($where= "")
+    {
+        $data = $this->db->query('select * from j_kelamin '.$where);
+        return $data;
+    }
+    function GetStat($where= "")
+    {
+        $data = $this->db->query('select * from s_pegawai '.$where);
+        return $data;
+    }
+    function GetKwn($where= "")
+    {
+        $data = $this->db->query('select * from s_kawin '.$where);
+        return $data;
+    }
 
 }
 

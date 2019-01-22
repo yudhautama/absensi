@@ -15,8 +15,13 @@
   <link rel="stylesheet" href="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/datatables/dataTables.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/css/adminlte.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/iCheck/all.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <!-- jQuery -->
+<script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/jquery/jquery.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -54,8 +59,51 @@
                 </div>
               <!-- /.card-header -->
               <div class="card-body">
-               <form action="" method="post" enctype="multipart/form-data" >
+              <?php echo form_open('tbl_karyawan/deleteAll');?>
+              
                 <p><?php echo anchor(site_url('tbl_karyawan/create'),'Tambah', 'class="btn btn-primary"'); ?></p>
+              </div>
+              <input type="submit" value="Delete" onclick="return confirm('are you sure')"/>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-2">
+                    <label for="">From Date</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                      <input type="date" name="fromdate" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <label for="">To Date</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                      <input type="date" name="todate" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <label for="">Jenis kelamin</label>
+                    <select class="form-control form-control-sm" name="j_kel" >
+                      <option value=''>--Pilih Jenis Kelamin--</option>
+                      <?php foreach($j_kel as $row) { ?>
+                        <option value="<?php echo $row['jenis'] ?>">
+                          <?php echo $row['jenis'] ?>
+                        </option>
+                      <?php } ?>
+                    </select><br>
+                    <button class="btn btn-primary" type="submit" name="filter">Filter</button>
+                    <?php if(isset($_POST['filter'])){
+                      header('location: tbl_karyawan?jenis_kelamin='.$_POST['j_kel']."&fromdate=".$_POST['fromdate']."&todate=".$_POST['todate']);
+                    } ?>
+                  </div>
+                </div>
               </div>
               <div class="col-md-4 text-left">
                 <div id="message">
@@ -65,8 +113,9 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <tr>
+                  <th><input type="checkbox" id="check-all"></th>
                     <th>No</th>
-                    <th>NIKwdasdadas</th>
+                    <th>NIK</th>
                     <th>Nama Karyawan</th>
                     <th>Tanggal Lahir</th>
                     <th>Jenis Kelamin</th>
@@ -82,6 +131,7 @@
                   {
                     ?>
                     <tr>
+                    <td><input type='checkbox' class='check-item' name='nik[]' value="<?php echo $tbl_karyawan->nik ?>"></td>
                       <td width="30px"><?php echo ++$start ?></td>
                       <td><?php echo $tbl_karyawan->nik ?></td>
                       <td width="150px"><?php echo $tbl_karyawan->nama_kyn ?></td>
@@ -100,7 +150,7 @@
                   ?>
                 </tbody>
               </table>
-            </form>
+              <?php echo form_close();?>
           </div>
           <!-- /.card-body -->
         </div>
@@ -129,8 +179,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/jquery/jquery.min.js"></script>
+
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables -->
@@ -144,9 +193,13 @@
 <script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/js/demo.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/iCheck/icheck.min.js"></script>
+
 <!-- page script -->
 <script>
   $(function () {
+
     $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
@@ -156,6 +209,15 @@
       "info": true,
       "autoWidth": false
     });
+
+    $("#check-all").click(function(){ // Ketika user men-cek checkbox all
+      if($(this).is(":checked")) // Jika checkbox all diceklis
+        $(".check-item").prop("checked", true); // ceklis semua checkbox siswa dengan class "check-item"
+      else // Jika checkbox all tidak diceklis
+        $(".check-item").prop("checked", false); // un-ceklis semua checkbox siswa dengan class "check-item"
+    });
+
+
   });
 </script>
 </body>

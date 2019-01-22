@@ -20,17 +20,27 @@ class Auth extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    //Codeigniter : Write Less Do More
+    if($this->session->userdata('logged_in') !== TRUE){
+      redirect('login');
+    }
   }
-
-  function index()
-  {
-    $this->load->view('login');
+ 
+  function index(){
+    //Allowing akses to admin only
+      if($this->session->userdata('level')==='admin'){
+          $this->load->view('dashboard1');
+      }else{
+          echo "Access Denied";
+      }
+ 
   }
-
-  function login()
-  {
-    redirect('dashboard1');
+ 
+  function staff(){
+    //Allowing akses to staff only
+    if($this->session->userdata('level')==='2'){
+      $this->load->view('dashboard2');
+    }else{
+        echo "Access Denied";
+    }
   }
-
 }

@@ -16,7 +16,21 @@ class Tbl_detail_absen extends CI_Controller
     {
         $q = urldecode($this->input->get('q', TRUE));
         $start = intval($this->input->get('start'));
-        
+        if(isset($_GET['jenis_absen'])){
+            $jenis_absen = $_GET['jenis_absen'];
+        }else{
+            $jenis_absen = '';
+        }
+        if(isset($_GET['fromdate'])){
+            $fromdate = $_GET['fromdate'];
+        }else{
+            $fromdate = '';
+        }
+        if(isset($_GET['todate'])){
+            $todate = $_GET['todate'];
+        }else{
+            $todate = '';
+        }
         if ($q <> '') {
             $config['base_url'] = base_url() . 'tbl_detail_absen/index.html?q=' . urlencode($q);
             $config['first_url'] = base_url() . 'tbl_detail_absen/index.html?q=' . urlencode($q);
@@ -34,13 +48,13 @@ class Tbl_detail_absen extends CI_Controller
         $this->pagination->initialize($config);
 
         $data = array(
-            'tbl_detail_absen_data' => $this->Tbl_detail_absen_model->duatabel(),
+            'tbl_detail_absen_data' => $this->Tbl_detail_absen_model->duatabel($jenis_absen, $fromdate, $todate),
             'q' => $q,
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
             'start' => $start,
-            'bulan'=>$this->Tbl_detail_absen_model->GetBulan()->result_array(),
-            'tahun'=>$this->Tbl_detail_absen_model->GetTahun()->result_array()
+            'j_absen' => $this->Tbl_detail_absen_model->GetAbs()->result_array(),
+            
         );
         $data['page']='lainnya';
         $this->load->view('tbl_detail_absen/tbl_detail_absen_list', $data);
@@ -244,6 +258,7 @@ class Tbl_detail_absen extends CI_Controller
         xlsEOF();
         exit();
     }
+
 
 }
 

@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/iCheck/all.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -70,11 +72,9 @@
                         <input type="date" class="form-control form-control-sm" name="tgl_lahir" id="tgl_lahir" placeholder="Tgl Lahir" value="<?php echo $tgl_lahir; ?>" />
                       </div>
                       <div class="form-group">
-                       <label for="varchar">Jenis Kelamin <?php echo form_error('j_kel') ?></label>
-                       <select class="form-control form-control-sm" name="j_kel" id="j_kel" placeholder="Jenis Kelamin" >
-                         <option>--Pilih Jenis Kelamin--</option>
+                       <label for="varchar">Jenis Kelamin <?php echo form_error('j_kel') ?></label><br>
                          <?php foreach($j_kel as $row) { ?>
-                          <option value="<?php echo $row['id_jk'] ?>"><?php echo $row['jenis'] ?></option>
+                           <input  type="radio" name="j_kel" value="<?php echo $row['id_jk'] ?>" class="flat-red"><?php echo $row['jenis'] ?>
                         <?php } ?>
                       </select>
                     </div>
@@ -160,5 +160,14 @@
 <script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/js/demo.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/plugins/iCheck/icheck.min.js"></script>
+<script>
+//Flat red color scheme for iCheck
+$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+</script>
 </body>
 </html>

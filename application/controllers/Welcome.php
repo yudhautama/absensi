@@ -16,23 +16,23 @@ class Welcome extends CI_Controller {
 	function ceklogin(){
 		if(isset($_POST['login'])){
 			$user = $this->input->post('user',true);
-			$pass = $this->input->post('pass',true);
+			$pass = md5($this->input->post('pass',true));
 			$cek = $this->rafimodel->proseslogin($user, $pass);
 			$hasil = count($cek);
 			if($hasil > 0){
 				$yglogin = $this->db->get_where('users',array('username'=>$user, 'password' => $pass))->row();
 				$data = array('udhmasuk' => true,
-						'nama' => $yglogin->nama, 'email' => $yglogin->email, 'username' => $yglogin->username);
+						 'email' => $yglogin->email, 'username' => $yglogin->username);
 				$this->session->set_userdata($data);
-				if($yglogin->level == 'admin'){
+				if($yglogin->level == 'Admin'){
 					redirect('dashboard1');
 				}elseif($yglogin->level == 'moderator'){
 					redirect('moderator');
-				}elseif($yglogin->level =='member'){
+				}elseif($yglogin->level =='Karyawan'){
 				redirect('dashboard2');
 				}
 			}else{
-				redirect('index');
+				redirect('welcome');
 			}
 		}
 	}

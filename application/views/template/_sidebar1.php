@@ -4,7 +4,7 @@
 	<a href="index3.html" class="brand-link">
 		<img src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
 		style="opacity: .8">
-		<span class="brand-text font-weight-light">Pegawai</span>
+		<span class="brand-text font-weight-light">Karyawan</span>
 	</a>
 
 	<!-- Sidebar -->
@@ -15,7 +15,8 @@
 				<img src="<?php echo base_url()?>assets/vendor/AdminLTE-3.0.0-alpha/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
-				<a href="#" class="d-block">Alexander Pierce</a>
+				<a href="#" class="d-block">Karyawan</a>
+				<a href="#" class="d-block">Karyawan</a>
 			</div>
 		</div>
 

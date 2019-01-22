@@ -30,27 +30,26 @@ class Tbl_detail_absen_model extends CI_Model
     }
 
     //join tabel karyawan dan tabel detail absensi
-    function duatabel(){
+    function duatabel($jenis_absen='', $fromdate='', $todate=''){
         $this->db->select('*');
         $this->db->from('tbl_karyawan');
         $this->db->join('tbl_detail_absen','tbl_detail_absen.nik = tbl_karyawan.nik');
+        if($jenis_absen!=''){
+              $this->db->like('j_absen',$jenis_absen);
+        }
+        if($fromdate!=''){
+            $this->db->where('tgl >=', $fromdate);
+        }
+        if($todate!=''){
+            $this->db->where('tgl <=', $todate);
+        }
         $query = $this->db->get();
         if($query->num_rows() != 0){
             return $query->result();
         } else {
         return false;
         }
-    }
-
-    // function tabel(){
-    //     $this->db->select('nama_kyn');
-    //     $this->db->from('tbl_karyawan');
-    //     $this->db->join('tbl_detail_absen','$tbl_detail_absen.nik = tbl_karyawan.nik');
-    //     $query = $this->db->get();
-    //     return $query->result();
-    // }
-
-    
+    }    
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('id_kyn', $q);
@@ -122,7 +121,6 @@ class Tbl_detail_absen_model extends CI_Model
     function karyawan($nik){
         return $this->db->query("select * from tbl_karyawan where nik = '$nik'");
     }
-
 }
 
 /* End of file Tbl_detail_absen_model.php */
